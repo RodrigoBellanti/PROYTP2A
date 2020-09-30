@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const dataInventors = require('./../data/inventor')
-
+const dataInventors = require('./../data/inventor');
 
 // listado de todos los inventors
 // http://localhost:3000/api/inventors/
 router.get('/', async (req, res) =>{
-    res.json(await dataInventors.getAllInventors());
+    res.json( await dataInventors.getAllInventors());
 });
 
 // http://localhost:3000/api/inventors/8
