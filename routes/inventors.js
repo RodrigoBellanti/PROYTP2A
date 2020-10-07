@@ -9,20 +9,28 @@ router.get('/', async (req, res) =>{
 });
 
 // http://localhost:3000/api/inventors/8
-router.get('/:id', (req, res) =>{
-    res.send('Un inventor especifico');
+router.get('/:id', async (req, res) =>{
+    res.json( await dataInventors.getInventor(req.params.id))
 });
 
-router.post('/', (req, res) => {
-    res.send('Aca se hace un alta');
+router.post('/', async (req, res) => {
+    const inventor = req.body;
+    await dataInventors.pushInventor(inventor);
+    const inventorPersistido = await dataInventors.getInventor(inventor._id);
+    res.json(inventorPersistido)
 });
 
-router.put('/:id', (req, res) =>{
-    res.send('Acá se hace una modificacion');
+router.put('/:id', async (req, res) =>{
+    const inventor = req.body;
+    inventor._id = req.params.id;
+    await dataInventors.updateInventor(inventor);
+    res.json(await dataInventors.getInventor(req.params.id))
 });
 
-router.delete('/:id', (req,res) => {
-    res.send('Acá se hace la eliminacion');
+router.delete('/:id', async (req,res) => {
+    console.log('Delete');
+    await dataInventors.deleteInventor(req.params.id);
+    res.send('Inventor eliminado');
 });
 
 
