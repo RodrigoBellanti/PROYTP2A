@@ -1,15 +1,16 @@
 //mongodb+srv://admin:<password>@cluster0.uiugy.mongodb.net/<dbname>?retryWrites=true&w=majority
 
+
 const fs = require('fs').promises;
-const PATHMOCINVENTORS = __dirname + '/mocInventor.json';
+const PATH = __dirname + '/inventorsMOC.json';
 const connection = require('./conexionMongo');
 
 async function readMocInventor(){
-   return JSON.parse(await fs.readFile(PATHMOCINVENTORS, 'utf8'));
+    return JSON.parse( await fs.readFile(PATH, 'utf8'));
 }
 
 async function writeMocInventor(inventors){
-    await fs.writeFile(PATHMOCINVENTORS, JSON.stringify(inventors, null, ' '));
+    await fs.writeFile(PATH, JSON.stringify(inventors, null, ' '));
 }
 
 
@@ -98,7 +99,7 @@ async function deleteInventor(id){
 
     const result = await connectionMongo
                         .db('sample_betp2')
-                        .collecion('inventors')
+                        .collection('inventors')
                         .deleteOne({_id: parseInt(id)})
 
     return result;
